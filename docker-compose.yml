@@ -2,6 +2,8 @@ services:
   whisper-diarization:
     build: .
     container_name: whisper-diarization
+    ports:
+      - "8001:8000"
     volumes:
       - ./data:/data
     deploy:
@@ -11,5 +13,5 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
-    # Example: process an audio file
-    # command: ["-a", "/data/input/audio.wav"]
+    # To use CLI instead of API:
+    # docker compose run --rm whisper-diarization python diarize.py -a /data/input/audio.wav

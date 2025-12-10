@@ -40,7 +40,12 @@ ENV LD_LIBRARY_PATH=/usr/local/lib/python3.10/dist-packages/nvidia/cudnn/lib:/us
 COPY . .
 
 # Create directories
-RUN mkdir -p /data/input /data/output
+RUN mkdir -p /data/input /data/output /tmp/diarization_uploads
 
-ENTRYPOINT ["python", "diarize.py"]
-CMD ["--help"]
+# Expose API port
+EXPOSE 8001
+
+# Default: run API server
+# Override with: docker run ... python diarize.py -a /data/input/file.wav
+ENTRYPOINT ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8001"]
+CMD []
