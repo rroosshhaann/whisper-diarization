@@ -1,0 +1,15 @@
+services:
+  whisper-diarization:
+    build: .
+    container_name: whisper-diarization
+    volumes:
+      - ./data:/data
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    # Example: process an audio file
+    # command: ["-a", "/data/input/audio.wav"]
